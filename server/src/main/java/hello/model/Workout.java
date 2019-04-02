@@ -1,6 +1,7 @@
-package hello;
+package hello.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import hello.model.Exercise;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

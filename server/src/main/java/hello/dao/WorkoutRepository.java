@@ -1,6 +1,6 @@
-package hello;
+package hello.dao;
 
-
+import hello.model.Workout;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
