@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add workout</title>
+</head>
+<body>
+<h1>Add a workout</h1>
+<p>Select exercises...</p>
+<form id="addWorkout">
+    <select name="exercise">
+        <option value="pull-up">Pull-ups</option>
+        <option value="push-up">Push-ups</option>
+        <option value="dips">Dips</option>
+        <option value="chin-up">Chin-ups</option>
+    </select>
+    <span>How many?</span>
+    <input name="repetitions" type="number"><br>
+    <select name="exercise">
+        <option value="pull-up">Pull-ups</option>
+        <option value="push-up">Push-ups</option>
+        <option value="dips">Dips</option>
+        <option value="chin-up">Chin-ups</option>
+    </select>
+    <span>How many?</span>
+    <input name="repetitions" type="number"><br>
+    <select name="exercise">
+        <option value="pull-up">Pull-ups</option>
+        <option value="push-up">Push-ups</option>
+        <option value="dips">Dips</option>
+        <option value="chin-up">Chin-ups</option>
+    </select>
+    <span>How many?</span>
+    <input name="repetitions" type="number"><br>
+
+    <button type="submit" onclick="addWorkoutToDB()">Add workout</button>
+</form>
+<script>
+    function addWorkoutToDB() {
+        let formData = JSON.stringify($("#addWorkout").serializeArray());
+        console.log(formData);
+    }
+</script>
+</body>
+</html>
