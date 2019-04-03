@@ -17,6 +17,8 @@ public class WorkoutController {
     @GetMapping("/workouts")
     @ResponseBody
     public List<Workout> getAll() {
+
+        workoutService.generateWorkouts();
         return workoutService.getAllWorkouts();
     }
 
@@ -31,6 +33,14 @@ public class WorkoutController {
     public Workout addWorkout(@RequestBody Workout workout) {
         workoutService.addWorkout(workout);
         return workout;
+    }
+
+    @PutMapping("/workouts/{workoutId}")
+    public void updateUser(@PathVariable Long workoutId, @RequestBody Workout workout) {
+        Workout toUpdateWorkout = workoutService.getWorkoutById(workoutId);
+        toUpdateWorkout.setExercises(workout.getExercises());
+        toUpdateWorkout.setTimestamp(workout.getTimestamp());
+        workoutService.addWorkout(toUpdateWorkout);
     }
 
     @DeleteMapping("/workouts/{workoutId}")
