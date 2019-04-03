@@ -1,0 +1,24 @@
+Workout:
+{ "exercises": [
+{"name": "pull-up", "repetitions": 10},
+{"name": "push-up", "repetitions": 20},
+{"name": "dip", "repetitions": 30}],
+"timestamp": 12345346346 }
+
+User registration:
+{
+"username": "user",
+"password": "password",
+"roles": [{
+        "name": "USER"
+}, {
+        "name": "ACTUATOR"
+}],
+"active": "true"
+}
+
+User login:
+POST request to http://localhost:8080/oauth/token?grant_type=password&username=[useename]&password=[password]
+returns an access token, client id and client secret.
+when you want to access protected resources:
+GET/POST request to https://localhost/[desired url]?access_token=access_token

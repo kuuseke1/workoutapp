@@ -1,8 +1,6 @@
 package hello.model;
 
-
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -18,13 +16,8 @@ import lombok.ToString;
 @Setter
 @ToString
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class User extends BaseEntity{
+public class Role extends BaseEntity{
 
-    private String username;
-    private String password;
-    @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
-    private List<Role> roles;
-    private boolean active;
-    @OneToMany(cascade=CascadeType.ALL)
-    private List<Workout> workouts;
+    private String name;
+
 }

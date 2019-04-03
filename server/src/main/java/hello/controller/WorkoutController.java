@@ -2,6 +2,7 @@ package hello.controller;
 
 import hello.model.Workout;
 import hello.service.WorkoutService;
+import org.hibernate.validator.constraints.pl.REGON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -9,12 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
+@RequestMapping(value = {"/workouts"})
 public class WorkoutController {
 
     @Autowired
     WorkoutService workoutService;
 
-    @GetMapping("/workouts")
+    @GetMapping("")
     @ResponseBody
     public List<Workout> getAll() {
 
@@ -22,20 +24,21 @@ public class WorkoutController {
         return workoutService.getAllWorkouts();
     }
 
-    @GetMapping("/workouts/{workoutId}")
+    @GetMapping("{workoutId}")
     @ResponseBody
     public Workout getWorkoutById(@PathVariable("workoutId") Long workoutId) {
         return workoutService.getWorkoutById(workoutId);
     }
 
-    @PostMapping("/workouts")
+    @PostMapping("")
     @ResponseBody
     public Workout addWorkout(@RequestBody Workout workout) {
         workoutService.addWorkout(workout);
         return workout;
     }
 
-    @PutMapping("/workouts/{workoutId}")
+    @PutMapping("{workoutId}")
+    @ResponseBody
     public void updateUser(@PathVariable Long workoutId, @RequestBody Workout workout) {
         Workout toUpdateWorkout = workoutService.getWorkoutById(workoutId);
         toUpdateWorkout.setExercises(workout.getExercises());
@@ -43,12 +46,14 @@ public class WorkoutController {
         workoutService.addWorkout(toUpdateWorkout);
     }
 
-    @DeleteMapping("/workouts/{workoutId}")
+    @DeleteMapping("{workoutId}")
+    @ResponseBody
     public void deleteWorkout(@PathVariable("workoutId") Long workoutId) {
         workoutService.deleteWorkout(workoutId);
     }
 
-    @DeleteMapping("/workouts")
+    @DeleteMapping("")
+    @ResponseBody
     public void deleteAll() {
         workoutService.deleteAll();
     }
