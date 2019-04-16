@@ -8,6 +8,7 @@
         --->
         <router-link :to="{path: '/home'}" :class="{ active: activeTab === 'Home'}" >HOME</router-link>
         <router-link :to="{path: '/addExercise'}" :class="{ active: activeTab === 'AddExercise'}" >ADD EXERCISE</router-link>
+        <router-link :to="{path: '/workouts'}" :class="{ active: activeTab === 'workouts'}" >WORKOUTS</router-link>
     </div>
 </template>
 <script>
