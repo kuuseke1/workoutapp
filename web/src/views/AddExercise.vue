@@ -8,26 +8,28 @@
                     <h3> {{ msg }} </h3>
                     <p class="msg">Select exercise:<br></p>
                     <label>
-                        <select name="name" v-model="name">
-                            <option value="Push-up">Push-up</option>
-                            <option value="Burpee">Burpee</option>
-                            <option value="Squat">Squat</option>
-                            <option value="Grunches">Grunches</option>
+                        <select class="form-control" name="name" v-model="name">
+                            <option value="Push-ups">Push-ups</option>
+                            <option value="Burpees">Burpees</option>
+                            <option value="Squats">Squats</option>
+                            <option value="Crunches">Crunches</option>
+                            <option value="Pull-ups">Pull-ups</option>
+                            <option value="Dips">Dips</option>
                         </select>
                     </label><br>
                     <p class="msg">Select repetitions:<br></p>
-                    <input name="repetitions" type="radio" id="one" value="One" v-model="repetitions">
-                    <label for="one">One</label>
+                    <input type="number" name="repetitions" min="1" max="500" v-model="repetitions">
                     <br>
-                    <input name="repetitions" type="radio" id="two" value="Two" v-model="repetitions">
-                    <label for="two">Two</label>
                     <br>
-
                     <input type="submit" value="Add exercise" class="btn">
                     <br>
-                    <p class="msg">Selected: {{ name }}</p>
-                    <p class="msg">Picked: {{ repetitions }}</p>
+
+                    <p class="msg">Name: {{ name }}</p>
+                    <p class="msg">Repetitions: {{ repetitions }}</p>
+                    <!---<p class="msg">Picked: {{ users }}</p>--->
                 </form>
+                <br>
+                <button type="submit" @click="addWorkout">Finish Workout</button>
             </div>
         </div>
     </div>
@@ -36,6 +38,7 @@
 <script>
     import axios from 'axios';
     import Navigation from '../components/Navigation.vue';
+
     export default {
         name: "AddExercise",
         components: {
@@ -46,23 +49,36 @@
                 name: '',
                 repetitions: '',
                 msg: '',
+                users: [],
+
             }
         },
         methods: {
-            addExercise() {
+            addExercise: function () {
+                this.users.push({
+                    name: this.name,
+                    repetitions: this.repetitions || 1,
+                }).then(this.msg = "Keep going :)",
+                this.name = '',
+                this.repetitions = '');
+
+            },
+            addWorkout() {
                 //this.$emit('addExercise', newExercise);
                 axios
                     .post('http://localhost:8080/workouts', {
-                        name: this.name,
-                        repetitions: this.repetitions,
+                        exercises: this.users,
+                        timestamp: Math.round(+new Date() / 1000),
                     })
                     .then((response => {
                         if (response.status === 200) {
-                            this.msg = "Exercise was added";
+                            this.msg = "Workout was added";
                         } else {
                             this.msg = "Something went wrong";
                         }
                     }));
+                this.name = '';
+                this.repetitions = '';
             },
         },
     };
@@ -76,6 +92,7 @@
         background: rgb(0, 0, 0);
         background: rgba(0, 0, 0, 0.5) url("../assets/pic.jpg") no-repeat top;
     }
+
     .login-box {
         position: absolute;
         top: 50%;
@@ -83,6 +100,7 @@
         transform: translate(-50%, -50%);
         width: 400px;
     }
+
     .form {
         position: relative;
         /*background: rgba(255, 255, 255, 0.41);*/
@@ -97,36 +115,31 @@
         /*background: #868686;*/
         border: solid rgba(255, 255, 255, 0.31);
     }
+
     .form .msg {
         color: rgb(162, 162, 162);
-        font-size: 18px;
+        font-size: 25px;
     }
-    .create-button {
+
+    h3 {
         color: #a24444;
-        text-decoration: none;
-        font-size: 12px;
-        /* #a24444;*/
-        /*background-color: rgba(0, 0, 0, 0.77);*/
     }
-    .create-button:hover {
-        color: #ffffff;
-    }
-    .login-button {
+
+    button {
+        display: inline-block;
+        border: solid 5px black;
+        background: #555;
+        color: #fff;
+        padding: 7px 15px;
         cursor: pointer;
-        text-decoration: none;
-        /* Button height(vertical) and length(horiz)*/
-        padding: 6px 80px;
-        /* up, right, bottom, left*/
-        margin: 10px 0 5px 0;
-        border-radius: 45px;
-        border: 0;
-        /* Make the buttons appear below each other  OTHER OPTION display: inline-block;*/
-        background-color: rgba(0, 0, 0, 0.77);
-        color: #ffffff;
-        font-size: 22px;
     }
-    .login-button:hover {
-        background-color: #e6e6e6;
-        color: #000000;
+
+    input {
+        text-align: center;
+        font-size: 15px;
+    }
+
+    button:hover {
+        background: #666;
     }
 </style>

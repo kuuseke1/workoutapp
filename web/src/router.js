@@ -1,12 +1,11 @@
 import Vue from 'vue';
-import App from './App';
 import Router from 'vue-router';
-import WelcomePage from './views/Home.vue';
 import AddExercise from "./views/AddExercise";
 import Registration from "./views/Registration";
 import LandingPage from "./views/LandingPage";
 import Home from "./views/Home";
 import Login from "./views/Login";
+import Workouts from "./views/Workouts";
 
 Vue.use(Router);
 
@@ -36,6 +35,11 @@ export default new Router({
             path: '/login',
             name: 'login',
             component: Login
+        },
+        {
+            path: '/workouts',
+            name: 'workouts',
+            component: Workouts
         }
     ]
 });

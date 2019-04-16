@@ -32,6 +32,7 @@ public class WorkoutController {
     @ResponseBody
     public Workout addWorkout(@RequestBody Workout workout) {
         workoutService.addWorkout(workout);
+        System.out.println(workoutService.getAllWorkouts());
         return workout;
     }
 

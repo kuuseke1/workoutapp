@@ -38,7 +38,7 @@
     body {
         font-family: Arial, Helvetica, sans-serif;
         line-height: 1.4;
-        color: white;
+        color: black;
     }
     .btn {
         display: inline-block;
