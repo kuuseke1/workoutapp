@@ -18,7 +18,7 @@ User registration:
 }
 
 User login:
-POST request to http://localhost:8080/oauth/token?grant_type=password&username=[useename]&password=[password]
+POST request to http://localhost:8080/oauth/token?grant_type=password&username=[username]&password=[password]
 returns an access token, client id and client secret.
 when you want to access protected resources:
 GET/POST request to https://localhost/[desired url]?access_token=access_token

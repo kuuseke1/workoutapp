@@ -3,21 +3,53 @@
         <div class="register-box">
             <div class="form">
                 <form class="login-form">
-                    <input type="text" placeholder="name">
-                    <input type="password" placeholder="password">
-                    <input type="email" placeholder="email address">
-                    <router-link class="create-button" to="/login">Create</router-link>
-                    <p class="msg">Already registered?</p>
-                    <router-link class="login-button" to="/login">Sign in</router-link>
+                    <input type="text" placeholder="name" v-model="username">
+                    <input type="password" placeholder="password" v-model="password">
+                    <button class="create-button" @click="sendRegistrationRequest">Create</button>
+                    <!--<p class="msg">Already registered?</p>-->
+                    <!--<router-link class="login-button" to="/login">Sign in</router-link>-->
                 </form>
             </div>
+            <p>{{ msg }}</p>
         </div>
     </div>
 </template>
 
 <script>
+    import axios from "axios";
+
     export default {
-        name: "Registration.vue"
+        name: "Registration.vue",
+        data() {
+            return {
+                username: '',
+                password: '',
+                msg: ''
+            }
+        },
+        methods: {
+            sendRegistrationRequest() {
+                axios
+                    .post('http://localhost:8080/registration', {
+                        username: "user",
+                        password: "password",
+                        roles: [{
+                            name: "USER"
+                        }, {
+                            name: "ACTUATOR"
+                        }],
+                        active: "true"
+                    }).then((response => {
+                        if (response.status === 200) {
+                            this.msg = "You have been registered";
+                        } else {
+                            this.msg = "Something went wrong:" + response.status;
+                        }
+                    }));
+                this.username = '';
+                this.password = '';
+            }
+        }
     }
 </script>
 
