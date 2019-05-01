@@ -46,11 +46,14 @@ public class WorkoutController {
 
     @DeleteMapping("/workouts/{workoutId}")
     public void deleteWorkout(@PathVariable("workoutId") Long workoutId) {
+        System.out.println("---------->Deleted by id:");
+        System.out.println(workoutId.toString());
         workoutService.deleteWorkout(workoutId);
     }
 
     @DeleteMapping("/workouts")
     public void deleteAll() {
+        System.out.println("-------->Deleted ALL workouts");
         workoutService.deleteAll();
     }
 }

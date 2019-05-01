@@ -1,9 +1,10 @@
 <template>
     <div class="wrapper">
         <Navigation activeTab="workouts"/>
-
         <workouts-card
-                v-for="exerciseItem in items" :key="exerciseItem"
+                v-bind:i="item"
+                v-on:del-workout="delWorkout"
+                v-for="exerciseItem in items" :key="exerciseItem.id"
                 :item="exerciseItem"
                 :exercises="exerciseItem.exercises"
         ></workouts-card>
@@ -31,8 +32,29 @@
                 repetitions: '',
                 timestamp: '',
                 items: [],
-                offsetTop: 0,
             }
+        },
+        methods: {
+            delWorkout(id) {
+                const x = confirm("Are you sure you want to delete?");
+                if (x) {
+                    alert(id + " Heh");
+                    axios
+                        .delete('http://localhost:8080/workouts/' + id)
+                        .catch(error => {
+                            if (error) {
+                                this.msg = "We are sorry, error with network/server"
+                            }
+                        })
+                        .then((response => {
+                            if (response.status === 200) {
+                                this.msg = "Workout was deleted";
+                            } else {
+                                this.msg = "Something went wrong";
+                            }
+                        }));
+                }
+            },
         },
         mounted() {
 
@@ -79,4 +101,5 @@
         margin: 20px 20px;
         max-width: 50%;
     }
+
 </style>

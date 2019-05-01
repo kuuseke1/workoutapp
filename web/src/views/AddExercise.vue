@@ -26,7 +26,7 @@
 
                     <p class="msg">Name: {{ name }}</p>
                     <p class="msg">Repetitions: {{ repetitions }}</p>
-                    <!---<p class="msg">Picked: {{ users }}</p>--->
+                    <p class="msg">Picked: {{ users }}</p>
                 </form>
                 <br>
                 <button type="submit" @click="addWorkout">Finish Workout</button>
@@ -59,8 +59,8 @@
                     name: this.name,
                     repetitions: this.repetitions || 1,
                 }).then(this.msg = "Keep going :)",
-                this.name = '',
-                this.repetitions = '');
+                    this.name = '',
+                    this.repetitions = '');
 
             },
             addWorkout() {
@@ -70,15 +70,22 @@
                         exercises: this.users,
                         timestamp: Math.round(+new Date() / 1000),
                     })
+
                     .then((response => {
                         if (response.status === 200) {
                             this.msg = "Workout was added";
                         } else {
                             this.msg = "Something went wrong";
                         }
-                    }));
+                    }))
+                    .catch(error => {
+                        if (error) {
+                            this.msg = "We are sorry, error with network/server"
+                        }
+                    });
                 this.name = '';
                 this.repetitions = '';
+                this.users = [];
             },
         },
     };
