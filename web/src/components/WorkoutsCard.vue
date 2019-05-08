@@ -1,11 +1,12 @@
 <template>
     <div class="workouts-card" v-bind:key="item.id">
-        <pre>{{item}}</pre>
-        <pre>{{item.id}}</pre>
+        <!--<pre>{{item}}</pre>-->
+        <!--<pre>{{item.id}}</pre>-->
         <header>{{ toDate(item) }}
             <div class="but">
                 <!---SIIIIA--->
-                <button v-on:click="$emit('edit-workout', item.id)" class="btn">Edit</button>
+                <!--<button v-on:click="$emit('edit-workout', item.id)" class="btn">Edit</button>-->
+                <router-link class="btn" :to="{ name: 'edit', params: { itemId: item.id } }">Edit</router-link>
                 <button v-on:click="$emit('del-workout', item.id)" class="btn btn-del">Delete</button>
             </div>
         </header>
@@ -54,7 +55,8 @@
 
 <style scoped>
     .workouts-card {
-        background: beige;
+        margin-left: 2rem;
+        background: rgba(245, 245, 220, 0.84);
         padding: 1rem;
         width: 40rem;
         height: auto;
@@ -62,7 +64,7 @@
     }
 
     header {
-        color: #eadd23;
+        color: #6e4142;
         background-color: rgba(255, 255, 255, 0.39);
         padding: 20px;
         font-weight: bold;

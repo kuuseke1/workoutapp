@@ -38,6 +38,11 @@ public class WorkoutController {
 
     @PutMapping("/workouts/{workoutId}")
     public void updateWorkout(@PathVariable Long workoutId, @RequestBody Workout workout) {
+        System.out.println("---------->Editing:");
+        System.out.println(workoutId.toString());
+        System.out.println(workout.toString());
+        System.out.println(workoutService.getWorkoutById(workoutId));
+        System.out.println(workout.getExercises());
         Workout toUpdateWorkout = workoutService.getWorkoutById(workoutId);
         toUpdateWorkout.setExercises(workout.getExercises());
         toUpdateWorkout.setTimestamp(workout.getTimestamp());
