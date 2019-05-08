@@ -37,7 +37,7 @@ public class WorkoutController {
     }
 
     @PutMapping("/workouts/{workoutId}")
-    public void updateUser(@PathVariable Long workoutId, @RequestBody Workout workout) {
+    public void updateWorkout(@PathVariable Long workoutId, @RequestBody Workout workout) {
         Workout toUpdateWorkout = workoutService.getWorkoutById(workoutId);
         toUpdateWorkout.setExercises(workout.getExercises());
         toUpdateWorkout.setTimestamp(workout.getTimestamp());

@@ -1,9 +1,11 @@
 <template>
     <div class="wrapper">
         <Navigation activeTab="workouts"/>
+        <h3> {{ msg }} </h3>
         <workouts-card
                 v-bind:i="item"
                 v-on:del-workout="delWorkout"
+                v-on:edit-workout="editWorkout"
                 v-for="exerciseItem in items" :key="exerciseItem.id"
                 :item="exerciseItem"
                 :exercises="exerciseItem.exercises"
@@ -16,6 +18,7 @@
     import axios from 'axios';
     import Navigation from '../components/Navigation.vue';
     import WorkoutsCard from "../components/WorkoutsCard";
+    import * as $router from "vue-router";
 
     export default {
         name: "Workouts",
@@ -32,32 +35,64 @@
                 repetitions: '',
                 timestamp: '',
                 items: [],
+                msg: '',
             }
         },
         methods: {
-            delWorkout(id) {
+            editWorkout: function (id) {
                 const x = confirm("Are you sure you want to delete?");
                 if (x) {
-                    alert(id + " Heh");
+                    alert(id + " ID");
                     axios
-                        .delete('http://localhost:8080/workouts/' + id)
-                        .catch(error => {
-                            if (error) {
-                                this.msg = "We are sorry, error with network/server"
-                            }
-                        })
+                        .delete('http://localhost:8080/workouts/' + String(id))
                         .then((response => {
                             if (response.status === 200) {
                                 this.msg = "Workout was deleted";
+                                this.$router.go();
                             } else {
                                 this.msg = "Something went wrong";
                             }
-                        }));
+                        }))
+                        .catch(error => {
+                            if (error) {
+                                alert(this.$router.push("workouts"));
+                                this.$router.push("workouts");
+                                this.router.push({ name: 'workouts'});
+                                //window.location.reload(true);
+                                //this.$router.resolve({name: 'workouts'});
+                                //this.$router.resolve({name: 'AddExercise'});
+                                this.msg = "We are sorry, error with network/server"
+                            }
+                        });
+                }
+            },
+            delWorkout: function (id) {
+                const x = confirm("Are you sure you want to delete?");
+                if (x) {
+                    alert(id + " ID");
+                    axios
+                        .delete('http://localhost:8080/workouts/' + String(id))
+                        .then((response => {
+                            if (response.status === 200) {
+                                this.msg = "Workout was deleted";
+                                this.$router.go();
+                            } else {
+                                this.msg = "Something went wrong";
+                            }
+                        }))
+                        .catch(error => {
+                            if (error) {
+                                alert(error);
+                                alert($router.push({ name: 'workouts'}));
+                                this.$router.push("workouts");
+                                //window.location.reload(true);
+                                this.msg = "We are sorry, error with network/server"
+                            }
+                        });
                 }
             },
         },
         mounted() {
-
             axios
                 .get('http://localhost:8080/workouts', {})
                 .then((response => {

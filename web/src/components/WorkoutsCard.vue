@@ -1,12 +1,11 @@
 <template>
     <div class="workouts-card" v-bind:key="item.id">
-        <h3> {{ msg }} </h3>
         <pre>{{item}}</pre>
         <pre>{{item.id}}</pre>
         <header>{{ toDate(item) }}
             <div class="but">
                 <!---SIIIIA--->
-                <button type="submit" class="btn">Edit</button>
+                <button v-on:click="$emit('edit-workout', item.id)" class="btn">Edit</button>
                 <button v-on:click="$emit('del-workout', item.id)" class="btn btn-del">Delete</button>
             </div>
         </header>
@@ -15,12 +14,12 @@
 </template>
 
 <script>
-    import axios from 'axios';
+    //import axios from 'axios';
 
     export default {
         name: "WorkoutsCard",
         props: {
-            item: Array,
+            item: Object,
             exercises: Array,
         },
         methods: {
@@ -28,7 +27,7 @@
                 let date = String(new Date(item.timestamp * 1000)).split('GMT')[0];
                 return date;
             },
-            delWorkout(id) {
+            /*delWorkout(id) {
                 alert(id);
                 axios
                     .delete('http://localhost:8080/workouts/', {
@@ -48,7 +47,7 @@
                             this.msg = "Something went wrong";
                         }
                     }));
-            },
+            },*/
         },
     }
 </script>
