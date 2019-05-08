@@ -10,10 +10,12 @@
         data() {
             return {
                 authenticated: false,
-                mockAccount: {
-                    username: "user",
-                    password: "pass"
-                }
+                accounts: [
+                        {username: "user", password: "pass"},
+                        {username: "roosi", password: "roosi"},
+                        {username: "risto", password: "risto"},
+                ],
+                currentUser: ''
             }
         },
         mounted() {

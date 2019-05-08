@@ -3,10 +3,10 @@
         <div class="register-box">
             <div class="form">
                 <form class="login-form">
-                    <input type="text" placeholder="name">
-                    <input type="password" placeholder="password">
-                    <input type="email" placeholder="email address">
-                    <router-link class="create-button" to="/login">Create</router-link>
+                    <input type="text" placeholder="name" v-model="input.username">
+                    <input type="password" placeholder="password" v-model="input.password">
+                    <input type="email" placeholder="email address" v-model="input.email">
+                    <router-link class="create-button" to="/login" @click.native="register()">Create</router-link>
                     <p class="msg">Already registered?</p>
                     <router-link class="login-button" to="/login">Sign in</router-link>
                 </form>
@@ -17,7 +17,41 @@
 
 <script>
     export default {
-        name: "Registration.vue"
+        name: "Registration.vue",data() {
+            return {
+                input: {
+                    pushups: "",
+                    burpees: "",
+                    squats: "",
+                    crunches: "",
+                    pullups: "",
+                    dips: ""
+                }
+            }
+        },
+        methods: {
+            enterData() {
+
+            },
+            register() {
+                if (this.input.username !== "" && this.input.password !== "" && this.input.email !== "") {
+                    let found = false;
+                    for(let i = 0; i < this.$parent.accounts.length; i++) {
+                        if (this.$parent.accounts[i].username === this.input.username) {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (found) {
+                        alert("This username is already taken!")
+                    } else {
+                        this.$parent.accounts.push({'username':this.input.username, 'password':this.input.password});
+                    }
+                } else {
+                    alert("Fill out username, password and email!")
+                }
+            }
+        }
     }
 </script>
 
