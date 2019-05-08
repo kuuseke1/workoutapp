@@ -3,51 +3,50 @@
         <div class="register-box">
             <div class="form">
                 <form class="login-form">
-                    <input type="text" placeholder="name" v-model="username">
-                    <input type="password" placeholder="password" v-model="password">
-                    <button class="create-button" @click="sendRegistrationRequest">Create</button>
-                    <!--<p class="msg">Already registered?</p>-->
-                    <!--<router-link class="login-button" to="/login">Sign in</router-link>-->
+                    <input type="text" placeholder="name" v-model="input.username">
+                    <input type="password" placeholder="password" v-model="input.password">
+                    <input type="email" placeholder="email address" v-model="input.email">
+                    <router-link class="create-button" to="/login" @click.native="register()">Create</router-link>
+                    <p class="msg">Already registered?</p>
+                    <router-link class="login-button" to="/login">Sign in</router-link>
                 </form>
             </div>
-            <p>{{ msg }}</p>
         </div>
     </div>
 </template>
 
 <script>
-    import axios from "axios";
-
     export default {
-        name: "Registration.vue",
-        data() {
+        name: "Registration.vue",data() {
             return {
-                username: '',
-                password: '',
-                msg: ''
+                input: {
+                    username: "",
+                    password: "",
+                    email: ""
+                }
             }
         },
         methods: {
-            sendRegistrationRequest() {
-                axios
-                    .post('http://localhost:8080/registration', {
-                        username: "user",
-                        password: "password",
-                        roles: [{
-                            name: "USER"
-                        }, {
-                            name: "ACTUATOR"
-                        }],
-                        active: "true"
-                    }).then((response => {
-                        if (response.status === 200) {
-                            this.msg = "You have been registered";
-                        } else {
-                            this.msg = "Something went wrong:" + response.status;
+            enterData() {
+
+            },
+            register() {
+                if (this.input.username !== "" && this.input.password !== "" && this.input.email !== "") {
+                    let found = false;
+                    for(let i = 0; i < this.$parent.accounts.length; i++) {
+                        if (this.$parent.accounts[i].username === this.input.username) {
+                            found = true;
+                            break;
                         }
-                    }));
-                this.username = '';
-                this.password = '';
+                    }
+                    if (found) {
+                        alert("This username is already taken!")
+                    } else {
+                        this.$parent.accounts.push({'username':this.input.username, 'password':this.input.password});
+                    }
+                } else {
+                    alert("Fill out username, password and email!")
+                }
             }
         }
     }

@@ -9,6 +9,7 @@
         <router-link :to="{path: '/home'}" :class="{ active: activeTab === 'Home'}" >HOME</router-link>
         <router-link :to="{path: '/addExercise'}" :class="{ active: activeTab === 'AddExercise'}" >ADD EXERCISE</router-link>
         <router-link :to="{path: '/workouts'}" :class="{ active: activeTab === 'workouts'}" >WORKOUTS</router-link>
+        <router-link class="nav navbar-right"  :to="{path: '/'}" >Log out</router-link>
     </div>
 </template>
 <script>
@@ -44,5 +45,8 @@
     .topnav a.active {
         background-color: #a24444;
         color: black;
+    }
+    .nav {
+        margin-right: 1rem;
     }
 </style>

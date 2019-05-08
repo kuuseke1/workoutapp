@@ -6,6 +6,7 @@ import LandingPage from "./views/LandingPage";
 import Home from "./views/Home";
 import Login from "./views/Login";
 import Workouts from "./views/Workouts";
+import EditWorkout from "./views/EditWorkout";
 
 Vue.use(Router);
 
@@ -40,6 +41,11 @@ export default new Router({
             path: '/workouts',
             name: 'workouts',
             component: Workouts
+        },
+        {
+            path: '/edit',
+            name: 'edit',
+            component: EditWorkout
         }
     ]
 });

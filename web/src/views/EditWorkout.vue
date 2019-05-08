@@ -1,12 +1,11 @@
 <template>
-
     <div class="wrapper">
-        <Navigation activeTab="AddExercise"/>
+        <Navigation activeTab="EditWorkout"></Navigation>
         <div class="login-box">
-            <div class="form">
-                <form class="login-form" @submit.prevent="addExercise">
+            <div class="form" id="foo">
+                <form class="login-form" @submit.prevent="editExercise">
                     <h3> {{ msg }} </h3>
-                    <p class="msg"><b>Select exercise:</b><br></p>
+                    <p class="msg"><b>Edit exercise:</b><br></p>
                     <label>
                         <select class="form-control" name="name" v-model="name">
                             <option value="Push-ups">Push-ups</option>
@@ -17,11 +16,11 @@
                             <option value="Dips">Dips</option>
                         </select>
                     </label><br>
-                    <p class="msg"><b>Select repetitions:</b><br></p>
+                    <p class="msg"><b>Edit repetitions:</b><br></p>
                     <input type="number" name="repetitions" min="1" max="500" v-model="repetitions">
                     <br>
                     <br>
-                    <input type="submit" value="Add exercise" class="btn">
+                    <input type="submit" value="Edit exercise" class="btn">
                     <br>
 
                     <p class="msg">Name: {{ name }}</p>
@@ -29,8 +28,11 @@
                     <!--<p class="msg">Picked: {{ users }}</p>-->
                 </form>
                 <br>
-                <button type="submit" @click="addWorkout">Finish Workout</button>
+                <button type="submit" @click="editWorkout">Edit Workout</button>
             </div>
+        </div>
+        <div class="back">
+            <router-link class="btnn btn" :to="{path: '/workouts'}">Back</router-link>
         </div>
     </div>
 </template>
@@ -40,9 +42,12 @@
     import Navigation from '../components/Navigation.vue';
 
     export default {
-        name: "AddExercise",
+        name: "EditWorkout",
+        props: {
+            item: Object,
+        },
         components: {
-            Navigation
+            Navigation,
         },
         data() {
             return {
@@ -50,44 +55,46 @@
                 repetitions: '',
                 msg: '',
                 users: [],
-
             }
         },
         methods: {
-            addExercise: function () {
+            editExercise: function () {
                 this.users.push({
                     name: this.name,
                     repetitions: this.repetitions || 1,
-                }).then(this.msg = "Keep going :)",
+                }).then(this.msg = "Editing...",
                     this.name = '',
                     this.repetitions = '');
 
             },
-            addWorkout() {
-                //this.$emit('addExercise', newExercise);
+            editWorkout: function () {
                 axios
-                    .post('http://localhost:8080/workouts', {
+                    .put('http://localhost:8080/workouts/' + this.$route.params.itemId, {
                         exercises: this.users,
                         timestamp: Math.round(+new Date() / 1000),
                     })
 
                     .then((response => {
                         if (response.status === 200) {
-                            this.msg = "Workout was added";
+                            this.msg = "Workout was changed";
                         } else {
                             this.msg = "Something went wrong";
                         }
                     }))
                     .catch(error => {
                         if (error) {
-                            this.msg = "We are sorry, error with network/server"
+                            var x = document.getElementById("foo");
+                            x.style.display = "none";
+                            this.msg = "Workout was changed"
                         }
                     });
                 this.name = '';
                 this.repetitions = '';
                 this.users = [];
-            },
-        },
+            }
+
+            ,
+        }
     };
 </script>
 
@@ -111,7 +118,7 @@
     .form {
         position: relative;
         /*background: rgba(255, 255, 255, 0.41);*/
-        background: rgba(32, 32, 32, 0.73);
+        background: rgba(112, 112, 112, 0.6);
         margin: 0 auto 100px;
         padding: 40px;
         text-align: center;
@@ -124,12 +131,12 @@
     }
 
     .form .msg {
-        color: rgb(162, 162, 162);
+        color: rgb(0, 0, 0);
         font-size: 25px;
     }
 
     h3 {
-        color: #a24444;
+        color: #d30000;
     }
 
     button {
@@ -149,4 +156,11 @@
     button:hover {
         background: #666;
     }
+
+    .btnn {
+        width: 200px;
+        border-radius: 20px;
+        margin: 3rem;
+    }
+
 </style>

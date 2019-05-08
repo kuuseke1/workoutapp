@@ -2,8 +2,7 @@ package hello.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import hello.model.Exercise;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -11,6 +10,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @Data
+@AllArgsConstructor
 @Table(name = "workouts")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Workout {

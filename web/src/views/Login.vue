@@ -15,8 +15,6 @@
 </template>
 
 <script>
-    import axios from "axios";
-
     export default {
         name: "Login",
         data() {
@@ -30,29 +28,22 @@
         methods: {
             login() {
                 if (this.input.username !== "" && this.input.password !== "") {
-                    axios
-                        .post('http://localhost:8080/oauth/token', {
-                            params: this.axiosParams
-                        }).then((response => {
-                        if (response.status === 200) {
-                            this.$emit("authenticated", true);
-                            this.$router.replace({name: "Home"})
-                        } else {
-                            alert("The username and/or password is incorrect :(")
+                    let found = false;
+                    for(let i = 0; i < this.$parent.accounts.length; i++) {
+                        if (this.$parent.accounts[i].username === this.input.username && this.$parent.accounts[i].password === this.input.password) {
+                            found = true;
+                            break;
                         }
-                    }));
+                    }
+                    if (found) {
+                        this.$emit("authenticated", true);
+                        this.$router.replace({name: "Home"})
+                    } else {
+                        alert("The username and/or password is incorrect :(")
+                    }
                 } else {
                     alert("Fill out username and password!")
                 }
-            }
-        },
-        computed: {
-            axiosParams() {
-                const params = new URLSearchParams();
-                params.append('grant_type', 'password');
-                params.append('username', this.username);
-                params.append('password', this.password);
-                return params;
             }
         }
     }
