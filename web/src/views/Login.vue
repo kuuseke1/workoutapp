@@ -28,7 +28,14 @@
         methods: {
             login() {
                 if (this.input.username !== "" && this.input.password !== "") {
-                    if (this.input.username === this.$parent.mockAccount.username && this.input.password === this.$parent.mockAccount.password) {
+                    let found = false;
+                    for(let i = 0; i < this.$parent.accounts.length; i++) {
+                        if (this.$parent.accounts[i].username === this.input.username && this.$parent.accounts[i].password === this.input.password) {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (found) {
                         this.$emit("authenticated", true);
                         this.$router.replace({name: "Home"})
                     } else {
