@@ -1,30 +1,26 @@
 package hello.model;
 
 
-import javax.persistence.*;
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@ToString
+@Data
+@Table(name = "users")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class User extends BaseEntity{
-
-    private String username;
-    private String password;
-    @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
-    private List<Role> roles;
-    private boolean active;
-    @OneToMany(cascade=CascadeType.ALL)
-    private List<Workout> workouts;
+public class User {
+    @Id
+    @GeneratedValue
+    private long userId;
+    private int userHeight;
+    private int userWeight;
+    private String userName;
 }
+

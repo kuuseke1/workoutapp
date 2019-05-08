@@ -26,37 +26,37 @@ public class UserControllerTest {
 
     @Test
     public void getAllUsersTest() {
-        User user = new User("tom", null, null, true, null);
+        User user = new User();
         userController.addUser(user);
         given(userController.getAll()).willReturn(Arrays.asList(user));
     }
 
     @Test
     public void getUserByIdTest() {
-        User user = new User("tom", null, null, true, null);
+        User user = new User();
         userController.addUser(user);
-        given(userController.getUserById(user.getId())).willReturn(user);
+        given(userController.getUserById(user.getUserId())).willReturn(user);
     }
 
     @Test
     public void addUserTest() {
-        User user = new User("tom", null, null, true, null);
+        User user = new User();
         userController.addUser(user);
         given(userController.getAll()).willReturn(Arrays.asList(user));
     }
 
     @Test
     public void deleteUserByIdTest() {
-        User user = new User("tom", null, null, true, null);
+        User user = new User();
         userController.addUser(user);
-        userController.deleteUser(user.getId());
+        userController.deleteUser(user.getUserId());
         given(userController.getAll()).willReturn(null);
     }
 
     @Test
     public void deleteAllUsersTest() {
-        User user = new User("tom", null, null, true, null);
-        User user2 = new User("tim", null, null, true, null);
+        User user = new User();
+        User user2 = new User();
         userController.addUser(user);
         userController.addUser(user2);
         userController.deleteAll();

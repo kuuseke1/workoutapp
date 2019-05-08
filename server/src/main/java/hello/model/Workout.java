@@ -2,7 +2,9 @@ package hello.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import hello.model.Exercise;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;

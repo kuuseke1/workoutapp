@@ -11,7 +11,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -23,21 +24,21 @@ public class UserRepositoryTest {
 
     @Test
     public void findByUserNameTest() throws Exception {
-        User user = new User("tim", null, null, true, null);
+        User user = new User();
         userRepository.save(user);
-        assert userRepository.findByUsername("tim").get().getUsername().equals(user.getUsername());
+        assert userRepository.getOne(user.getUserId()).equals(user);
     }
 
     @Test
     public void addUserTest() throws Exception {
-        User user = new User("tim", null, null, true, null);
+        User user = new User();
         userRepository.save(user);
-        assert userRepository.findByUsername("tim").isPresent();
+        assert userRepository.getOne(user.getUserId()).equals(user);
     }
 
     @Test
     public void deleteAllUserTest() throws Exception {
-        User user = new User("tim", null, null, true, null);
+        User user = new User();
         userRepository.save(user);
         assert !userRepository.findAll().isEmpty();
         userRepository.deleteAll();
@@ -46,10 +47,10 @@ public class UserRepositoryTest {
 
     @Test
     public void deleteSingleUserTest() throws Exception {
-        User user = new User("tim", null, null, true, null);
+        User user = new User();
         userRepository.save(user);
-        assert userRepository.findByUsername("tim").isPresent();
         userRepository.delete(user);
-        assert !userRepository.findByUsername("tim").isPresent();
+        List<User> emptyList = new ArrayList<>();
+        assert userRepository.findAll().equals(emptyList);
     }
 }
