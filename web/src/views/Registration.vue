@@ -20,12 +20,9 @@
         name: "Registration.vue",data() {
             return {
                 input: {
-                    pushups: "",
-                    burpees: "",
-                    squats: "",
-                    crunches: "",
-                    pullups: "",
-                    dips: ""
+                    username: "",
+                    password: "",
+                    email: ""
                 }
             }
         },
